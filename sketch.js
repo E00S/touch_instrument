@@ -111,19 +111,19 @@ function mouseReleased() {
 function mouseDragged() {
 
     // map the mouse position to a frequency variable
-    if(touches == 1){
+    if(touches.length == 1){
         note = map(mouseY, 0, height, 40, 80);
         osc.freq(midiToFreq(Math.floor(note)));
     }
-    if(touches == 2){
+    if(touches.length == 2){
         let reverb_time = map(mouseY, 0, height, .1, 3);
         reverb.process(osc, reverb_time, 2);
     }
-    if(touches == 3){
+    if(touches.length == 3){
         note = map(mouseY, 0, height, 40, 80);
         osc.freq(midiToFreq(Math.floor(note)));
     }
-    if(touches == 4){
+    if(touches.length == 4){
         note = map(mouseY, 0, height, 40, 80);
         osc.freq(midiToFreq(Math.floor(note)));
     }
