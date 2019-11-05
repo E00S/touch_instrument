@@ -25,6 +25,8 @@ let reverb;
 
 function setup() {
 
+    print("version: 1");
+
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.parent("p5")
 
@@ -146,7 +148,6 @@ function mouseDragged() {
 }
 
 function mouseClicked() {
-    
 }
 
 // add these to make it work for touch screens
