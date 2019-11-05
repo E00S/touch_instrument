@@ -29,7 +29,6 @@ function setup() {
     canvas.parent("p5")
 
     osc = new p5.TriOsc();
-    osc.start();
     osc.amp(0);
 
     fft = new p5.FFT(.89, num_bars);
@@ -43,38 +42,47 @@ function setup() {
 
 function draw() {
 
-    noStroke()
-
-    // map the red value of our background fill to the frequency variable
     background(0);
-    stroke(255);
-    var spec = fft.analyze();
-    for (var i = 0; i < spec.length; i++) {
-        var amp = spec[i];
-        var y = map(amp, 0, 280, height, 0);
-        line(i * w, height, i * w, y);
-    }
-    if(touches.length >= 1) {
-        print(touches);
+
+    if(touches.length == 1) {
+        noStroke()
+
+        // map the red value of our background fill to the frequency variable
+        stroke(255);
+        var spec = fft.analyze();
+
+        for (var i = 0; i < spec.length; i++) {
+            var amp = spec[i];
+            var y = map(amp, 0, 280, height, 0);
+            line(i * w, height, i * w, y);
+        }
+
+        strokeWeight(2);
+        noFill();
+        if(circle_radius > 0) {
+            ellipse(circle_x, circle_y, circle_radius - 0, circle_radius - 0);
+            ellipse(circle_x, circle_y, circle_radius - 20, circle_radius - 20);
+            ellipse(circle_x, circle_y, circle_radius - 40, circle_radius - 40);
+        }
+
+        if(bool && circle_radius < 100) {
+            circle_radius += 5;
+        }
+        if(circle_radius >= 100) {
+            bool = false;
+        }
+        if (circle_radius > -1 && bool == false) {
+            circle_radius -= 5;
+        }
     }
 
-    strokeWeight(2);
-    noFill();
-    if(circle_radius > 0) {
-        ellipse(circle_x, circle_y, circle_radius - 0, circle_radius - 0);
-        ellipse(circle_x, circle_y, circle_radius - 20, circle_radius - 20);
-        ellipse(circle_x, circle_y, circle_radius - 40, circle_radius - 40);
-    }
+    if(touches.length == 2) {
 
-    if(bool && circle_radius < 100) {
-        circle_radius += 5;
+        for (var i = 0; i < spec.length; i++) {
+            line(i * w, height, i * w, mouseY);
+        }
     }
-    if(circle_radius >= 100) {
-        bool = false;
-    }
-    if (circle_radius > -1 && bool == false) {
-        circle_radius -= 5;
-    }
+ 
 }
 
 
@@ -85,18 +93,18 @@ function windowResized() {
 
 function mousePressed() {
 
-    // trigger the osc envelope
-    osc.start()
+    if(touches.length == 1) {
+        // trigger the osc envelope
+        osc.start()
+        bool = true;
+        
+        // Fade it in
+        osc.fade(1,.3);
 
-    bool = true;
-    
-    // Fade it in
-    osc.fade(1,.3);
-
-    circle_radius = 0;
-
-    circle_x = mouseX
-    circle_y = mouseY
+        circle_radius = 0;
+        circle_x = mouseX
+        circle_y = mouseY  
+    }
 
     mouseDragged()
 }
