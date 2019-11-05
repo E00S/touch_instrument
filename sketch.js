@@ -130,8 +130,26 @@ function mouseDragged() {
         reverb.process(osc, reverb_time, 2);
     }
     if(touches.length == 3){
-        note = map(mouseY, 0, height, 40, 80);
-        osc.freq(midiToFreq(Math.floor(note)));
+        if (mouseY <= height/4 && mouseY >= 0) {
+            print('square')
+            print(height/4)
+            osc.setType('square')
+        }
+        if (mouseY <= (height/4) * 2 && mouseY > height/4) {
+            print('sine')
+            print((height/4) * 2)
+            osc.setType('sine')
+        }
+        if (mouseY <= (height/4) * 3 && mouseY > (height/4) * 2) {
+            print('triangle')
+            print((height/4) * 3)
+            osc.setType('triangle')
+        }
+        if (mouseY <= (height/4) * 4 && mouseY > (height/4) * 3) {
+            print('sawtooth')
+            print((height/4) * 4)
+            osc.setType('sawtooth')
+        }
     }
     if(touches.length == 4){
         note = map(mouseY, 0, height, 40, 80);
