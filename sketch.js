@@ -78,7 +78,7 @@ function draw() {
 
     if(touches.length == 2) {
 
-        for (var i = 0; i < spec.length; i++) {
+        for (var i = 0; i < num_bars; i++) {
             line(i * w, height, i * w, mouseY);
         }
     }
@@ -145,6 +145,9 @@ function mouseDragged() {
     osc.pan(pan)
 }
 
+function mouseClicked() {
+    
+}
 
 // add these to make it work for touch screens
 function touchStarted() {
