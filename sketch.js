@@ -51,7 +51,21 @@ function draw() {
 
     background(0);
 
-    strokeWeight(2);
+    if(touches.length == 1 || one_touch) {
+        one_touch = true;
+        noStroke()
+
+        // map the red value of our background fill to the frequency variable
+        stroke(255);
+        var spec = fft.analyze();
+
+        for (var i = 0; i < spec.length; i++) {
+            var amp = spec[i];
+            var y = map(amp, 0, 280, height, 0);
+            line(i * w, height, i * w, y);
+        }
+
+        strokeWeight(2);
         noFill();
         if(touch_start || circle_radius_1 >= -1) {
             ellipse(circle_x, circle_y, circle_radius_1, circle_radius_1);
@@ -74,42 +88,6 @@ function draw() {
             circle_radius_3 -= 2.5;
         }
 
-    if(touches.length == 1 || one_touch) {
-        one_touch = true;
-        noStroke()
-
-        // map the red value of our background fill to the frequency variable
-        stroke(255);
-        var spec = fft.analyze();
-
-        for (var i = 0; i < spec.length; i++) {
-            var amp = spec[i];
-            var y = map(amp, 0, 280, height, 0);
-            line(i * w, height, i * w, y);
-        }
-
-        strokeWeight(2);
-        noFill();
-        if(touch_start) {
-            ellipse(circle_x, circle_y, circle_radius_1, circle_radius_1);
-            ellipse(circle_x, circle_y, circle_radius_2, circle_radius_2);
-            ellipse(circle_x, circle_y, circle_radius_3, circle_radius_3);
-        }
-
-        if(circle_radius_1 < 100) {
-            circle_radius_1 += 6;
-        }
-        if(circle_radius_2 < 80) {
-            circle_radius_2 += 4;
-        }
-        if(circle_radius_3 < 60) {
-            circle_radius_3 += 2.5;
-        }
-        if(!touch_start && circle_radius_1 >= -1) {
-            circle_radius_1 -= 6;
-            circle_radius_2 -= 4;
-            circle_radius_3 -= 2.5;
-        }
     }
 
     if(touches.length == 2) {
