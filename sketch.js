@@ -47,8 +47,6 @@ function setup() {
 
 function draw() {
 
-    
-
     background(0);
 
     if(touches.length == 1 || one_touch) {
@@ -143,7 +141,7 @@ function mouseDragged() {
 
     // map the mouse position to a frequency variable
     if(touches.length == 1){
-        note = map(mouseY, 0, height, 40, 80);
+        note = map(mouseY, 0, height, 50, 70);
         osc.freq(midiToFreq(Math.floor(note)));
     }
     if(touches.length == 2){
@@ -171,10 +169,6 @@ function mouseDragged() {
             print((height/4) * 4)
             osc.setType('sawtooth')
         }
-    }
-    if(touches.length == 4){
-        note = map(mouseY, 0, height, 40, 80);
-        osc.freq(midiToFreq(Math.floor(note)));
     }
 
     // track the mouse position with circle variables
