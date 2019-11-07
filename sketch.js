@@ -5,7 +5,7 @@ var fft;
 
 let noise
 let noise_env
-
+var one_touch = true;
 var bool;
 
 let frequency = 50
@@ -46,7 +46,8 @@ function draw() {
 
     background(0);
 
-    if(touches.length == 1) {
+    if(touches.length == 1 || one_touch) {
+        one_touch = true;
         noStroke()
 
         // map the red value of our background fill to the frequency variable
@@ -79,15 +80,15 @@ function draw() {
     }
 
     if(touches.length == 2) {
-
+        one_touch = false;
         for (var i = 0; i < num_bars; i++) {
-            rect(0, height, width, mouseY);
+            rect(0, height, width, -mouseY);
         }
     }
 
     if(touches.length == 3) {
-
-        for (var i = 4; i <= 0; i--) {
+        one_touch = false;
+        for (var i = 4; i >= 0; i--) {
             fill(255/i);
             rect(0, 0, width, (height/4) * i);
         }
