@@ -17,7 +17,7 @@ let circle_y = 0
 var volhistory = [];
 
 var note;
-var num_bars = 128;
+var num_bars = 64;
 var w;
 
 let reverb;
@@ -25,7 +25,7 @@ let reverb;
 
 function setup() {
 
-    print("version: 1");
+    print("version: 2");
 
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.parent("p5")
@@ -81,7 +81,15 @@ function draw() {
     if(touches.length == 2) {
 
         for (var i = 0; i < num_bars; i++) {
-            line(i * w, height, i * w, mouseY);
+            rect(0, height, width, mouseY);
+        }
+    }
+
+    if(touches.length == 3) {
+
+        for (var i = 4; i <= 0; i--) {
+            fill(255/i);
+            rect(0, 0, width, (height/4) * i);
         }
     }
  
@@ -126,7 +134,7 @@ function mouseDragged() {
         osc.freq(midiToFreq(Math.floor(note)));
     }
     if(touches.length == 2){
-        let reverb_time = map(mouseY, 0, height, .1, 3);
+        let reverb_time = map(mouseY, 0, height, 5, 0);
         reverb.process(osc, reverb_time, 2);
     }
     if(touches.length == 3){
