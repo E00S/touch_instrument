@@ -25,7 +25,7 @@ let reverb;
 
 function setup() {
 
-    print("version: 2");
+    print("version: 3");
 
     let canvas = createCanvas(windowWidth, windowHeight)
     canvas.parent("p5")
@@ -33,7 +33,7 @@ function setup() {
     osc = new p5.TriOsc();
     osc.amp(0);
 
-    fft = new p5.FFT(.89, num_bars);
+    fft = new p5.FFT(.70, num_bars);
     w = width/num_bars;
     bool = false;
 
@@ -43,6 +43,8 @@ function setup() {
 
 
 function draw() {
+
+    
 
     background(0);
 
@@ -81,15 +83,16 @@ function draw() {
 
     if(touches.length == 2) {
         one_touch = false;
-        for (var i = 0; i < num_bars; i++) {
-            rect(0, height, width, -mouseY);
-        }
+        fill(255);
+        noStroke();
+        rect(0, height, width, mouseY - height);
     }
 
     if(touches.length == 3) {
         one_touch = false;
-        for (var i = 4; i >= 0; i--) {
-            fill(255/i);
+        noStroke();
+        for (var i = 4; i > 0; i--) {
+            fill(255/(i + 1));
             rect(0, 0, width, (height/4) * i);
         }
     }
