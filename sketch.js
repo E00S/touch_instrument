@@ -7,10 +7,13 @@ let noise
 let noise_env
 var one_touch = true;
 var bool;
+var touch_start = false;
 
 let frequency = 50
 
-let circle_radius = 0
+let circle_radius_1 = 0;
+let circle_radius_2 = 0;
+let circle_radius_3 = 0;
 let circle_x = 0
 let circle_y = 0
 
@@ -48,6 +51,29 @@ function draw() {
 
     background(0);
 
+    strokeWeight(2);
+        noFill();
+        if(touch_start || circle_radius_1 >= -1) {
+            ellipse(circle_x, circle_y, circle_radius_1, circle_radius_1);
+            ellipse(circle_x, circle_y, circle_radius_2, circle_radius_2);
+            ellipse(circle_x, circle_y, circle_radius_3, circle_radius_3);
+        }
+
+        if(circle_radius_1 < 100 && touch_start) {
+            circle_radius_1 += 6;
+        }
+        if(circle_radius_2 < 80 && touch_start) {
+            circle_radius_2 += 4;
+        }
+        if(circle_radius_3 < 60 && touch_start) {
+            circle_radius_3 += 2.5;
+        }
+        if(!touch_start && circle_radius_1 >= -1) {
+            circle_radius_1 -= 6;
+            circle_radius_2 -= 4;
+            circle_radius_3 -= 2.5;
+        }
+
     if(touches.length == 1 || one_touch) {
         one_touch = true;
         noStroke()
@@ -64,20 +90,25 @@ function draw() {
 
         strokeWeight(2);
         noFill();
-        if(circle_radius > 0) {
-            ellipse(circle_x, circle_y, circle_radius - 0, circle_radius - 0);
-            ellipse(circle_x, circle_y, circle_radius - 20, circle_radius - 20);
-            ellipse(circle_x, circle_y, circle_radius - 40, circle_radius - 40);
+        if(touch_start) {
+            ellipse(circle_x, circle_y, circle_radius_1, circle_radius_1);
+            ellipse(circle_x, circle_y, circle_radius_2, circle_radius_2);
+            ellipse(circle_x, circle_y, circle_radius_3, circle_radius_3);
         }
 
-        if(bool && circle_radius < 100) {
-            circle_radius += 5;
+        if(circle_radius_1 < 100) {
+            circle_radius_1 += 6;
         }
-        if(circle_radius >= 100) {
-            bool = false;
+        if(circle_radius_2 < 80) {
+            circle_radius_2 += 4;
         }
-        if (circle_radius > -1 && bool == false) {
-            circle_radius -= 5;
+        if(circle_radius_3 < 60) {
+            circle_radius_3 += 2.5;
+        }
+        if(!touch_start && circle_radius_1 >= -1) {
+            circle_radius_1 -= 6;
+            circle_radius_2 -= 4;
+            circle_radius_3 -= 2.5;
         }
     }
 
@@ -182,11 +213,13 @@ function mouseClicked() {
 
 // add these to make it work for touch screens
 function touchStarted() {
+    touch_start = true;
     mousePressed()   
     mouseClicked()
 }
 
 
 function touchEnded() {
+    touch_start = false;
     mouseReleased()   
 }
